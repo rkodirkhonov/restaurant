@@ -62,7 +62,7 @@
     display: contents;
 }
 
-.app__navbar-smallscrenoverlay {
+.app__navbar-smallscreen_overlay {
     position: absolute;
     top: 0;
     left: 0;
@@ -128,18 +128,4 @@
         width: 110px;
     }
 }
-
-.overlay__close {
-    position: absolute;
-    top: 20px;
-    right: 20px;
-    background-color: red;
-    color: white;
-    padding: 8px 16px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    font-family: var(--font-base);
-    font-size: 16px;
-  }
   
