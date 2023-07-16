@@ -1,10 +1,10 @@
-import React, { useState, useRef, BsPauseFill, BsFillPlayFill } from 'react';
-
+import React, { useState, useRef } from 'react';
+import {BsPauseFill, BsFillPlayFill} from 'react-icons/bs'
 import './Intro.css';
 import { meal } from '../../constants';
 
 const Intro = () => {
-  const [playVideo, setPlayVideo] = useState(Boolean);
+  const [playVideo, setPlayVideo] = useState(false);
   const vidRef = useRef();
   
   const handleVideo = () => {
