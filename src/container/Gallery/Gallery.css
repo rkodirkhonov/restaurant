@@ -86,7 +86,7 @@
 @media screen and (max-width: 2000px){
     
     .app__gallery-content {
-        min-width: 1000px;
+        width: 50%;
         padding-right: 4rem;
     }
 
@@ -100,7 +100,9 @@
     .app__gallery {
         flex-direction: column;
     }
-
+    .app__gallery-content {
+        max-width: 50%;
+    }
     .app__gallery-images {
         max-width: 100%;
         margin: 5rem 0;
@@ -109,14 +111,21 @@
 
 @media screen and (max-width: 850px) {
     .app__gallery {
+        flex-direction: column;
         padding: 4rem 0 4rem 4rem;
     }
 }
 
 @media screen and (max-width: 650px) {
     .app__gallery {
+        flex-direction: column;
         padding: 4rem 0 4rem 2rem;
     }
+
+    .app__gallery-content {
+        max-width: 50%;
+    }
+
     .app__gallery-images_card {
         min-width: 240px;
         height: 320px;
