@@ -7,7 +7,7 @@
 }
 
 .app__gallery-content button {
-    margin-top: 1rem;
+    margin-top: 2rem;
 }
 
 .app__gallery-images {
@@ -101,7 +101,7 @@
         flex-direction: column;
     }
     .app__gallery-content {
-        max-width: 50%;
+        width: fit-content;
     }
     .app__gallery-images {
         max-width: 100%;
@@ -123,7 +123,7 @@
     }
 
     .app__gallery-content {
-        max-width: 50%;
+        width: fit-content;
     }
 
     .app__gallery-images_card {
