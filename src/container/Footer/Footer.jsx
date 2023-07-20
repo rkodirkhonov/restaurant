@@ -36,7 +36,7 @@ const Footer = () => (
          <FiInstagram />
       </div>
     <div className='footer__copyright'>
-      <p className='p__opensans'>2021 Gericht, All rights reserved.</p>
+      <p className='p__opensans'>2021 Gericht. All rights reserved.</p>
     </div>
   </div>
 );
