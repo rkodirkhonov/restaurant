@@ -24,7 +24,7 @@ To run the Restaurant Project locally, you need to have Node.js and npm (Node Pa
 1. Clone the repository to your local machine:
 
 ```
-git clone https://github.com/your-username/restaurant.git
+git clone https://github.com/rkodirkhonov/restaurant.git
 ```
 2. Navigate to the project directory:
 
