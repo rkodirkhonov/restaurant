@@ -135,8 +135,6 @@ const Navbar = () => {
                         setIsLoggedIn(false);
                         Logout();
                       }}
-                      // Ensure to call Logout to clear user session
-                      style={{ marginRight: "1rem" }}
                     >
                       Log out
                     </Link>
