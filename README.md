@@ -2,7 +2,7 @@
 
 A modern, responsive web application for table reservations with user authentication and protected routes.
 
-![Project Screenshot](https://via.placeholder.com/800x500) <!-- Replace with actual screenshot -->
+<!-- ![Project Screenshot](https://via.placeholder.com/800x500)  -->
 
 ---
 
