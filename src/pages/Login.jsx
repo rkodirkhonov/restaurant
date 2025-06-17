@@ -14,7 +14,7 @@ const Login = () => {
     e.preventDefault();
     try {
       await signInWithEmailAndPassword(auth, email, password);
-      navigate("/booking"); // redirect to home or dashboard after login
+      navigate("/book-table"); // redirect to book table page after successful login
     } catch (err) {
       setError(err.message);
     }
