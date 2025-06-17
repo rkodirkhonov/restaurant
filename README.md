@@ -1,83 +1,161 @@
-# Restaurant Project
+# 🍽️ Restaurant Reservation Website
 
-Welcome to the Restaurant Project!
+A modern, responsive web application for table reservations with user authentication and protected routes.
 
-## Table of Contents
+<!-- ![Project Screenshot](https://via.placeholder.com/800x500)  -->
 
-- [Introduction](#introduction)
-- [Installation](#installation)
-- [Usage](#usage)
-- [Features](#features)
-- [Technologies Used](#technologies-used)
-- [Contributing](#contributing)
-- [License](#license)
-- [Contact](#contact)
+---
 
-## Introduction
+## 📑 Table of Contents
+- [✨ Features](#-features)
+- [🔗 Demo](#-demo)
+- [🛠️ Installation](#-installation)
+- [🧱 Tech Stack](#-tech-stack)
+- [📁 Project Structure](#-project-structure)
+- [🔐 Environment Variables](#-environment-variables)
+- [📜 Available Scripts](#-available-scripts)
+- [🤝 Contributing](#-contributing)
+- [📝 License](#-license)
+- [📬 Contact](#-contact)
 
-The Restaurant Project is a React-based web application that showcases a restaurant's website. It provides visitors with information about the restaurant, its special menu, the talented chefs, and the restaurant's accolades. The project is designed to be responsive and visually appealing, making it suitable for different devices.
+---
 
-## Installation
+## ✨ Features
+- 🔐 **User Authentication** (Register / Login / Logout)
+- 📅 **Table Reservation System**
+- 🔒 **Protected Routes** for authenticated users
+- 📱 **Fully Responsive** design
+- 🖼️ **Restaurant Gallery & Menu**
+- 📍 **Interactive Location Map**
+- 📝 **Form Validation**
 
-To run the Restaurant Project locally, you need to have Node.js and npm (Node Package Manager) installed on your machine.
+---
 
-1. Clone the repository to your local machine:
+## 🔗 Demo
 
-```
+[![Live Demo](https://img.shields.io/badge/-Live%20Demo-brightgreen)](https://restaurant-website-h93f0xaop-rkodirkhonovs-projects.vercel.app/)  
+[![GitHub Repo](https://img.shields.io/badge/-GitHub%20Repo-blue)](https://github.com/rkodirkhonov/restaurant)
+
+---
+
+## 🛠️ Installation
+
+1. Clone the repository:
+
+```bash
 git clone https://github.com/rkodirkhonov/restaurant.git
-```
-2. Navigate to the project directory:
-
-```
 cd restaurant
 ```
 
-3. Install the project dependencies:
-```
+2. Install dependencies:
+
+```bash
 npm install
 ```
-## Usage
-4. Once the installation is complete, you can start the development server to preview the project:
+
+3. Set up environment variables:
+
+```bash
+cp .env.example .env
+# Add your Firebase config in .env
 ```
+
+4. Run the development server:
+
+```bash
 npm start
 ```
-The application will be accessible at http://localhost:3000/ in your web browser.
 
-## Features
+The app will be accessible at: [http://localhost:3000](http://localhost:3000)
 
-- **Navigation**: The website features a navigation bar allowing users to access different sections easily.
-- **Special Menu**: The project showcases the restaurant's special menu with mouth-watering dishes.
-- **Chef Section**: It introduces the talented chefs who create delicious culinary delights.
-- **Intro Section**: The homepage provides an introduction to the restaurant and its values.
-- **Laurels Section**: The restaurant's achievements and accolades are displayed in this section.
-- **Gallery**: Visitors can explore a gallery showcasing images of the restaurant and its cuisine.
-- **Find Us**: The restaurant's location and contact details are included in this section.
-- **Responsive Design**: The project is designed to be responsive, ensuring a seamless experience on various devices.
+---
 
-## Technologies Used
+## 🧱 Tech Stack
 
-- React
-- React DOM
+### Frontend:
+- React.js
+- React Router
+- CSS Modules
 - React Icons
-- Create React App
 - HTML5
 - CSS3
 
-## Contributing
+### Backend Services:
+- Firebase Authentication
+- (Optional) Firebase Firestore
 
-We welcome contributions from the community! If you want to contribute to the project, follow these steps:
+### Dev Tools:
+- Vite
+- ESLint
+- Prettier
 
-1. Fork the repository.
-2. Create a new branch for your feature or bug fix.
-3. Commit your changes and push the branch to your fork.
-4. Create a pull request, describing your changes and their purpose.
+---
 
-## License
+## 📁 Project Structure
 
-The Restaurant Project is licensed under the [MIT License](LICENSE).
+*(Optional — add later if needed, e.g., explain folders like \`/components\`, \`/pages\`, etc.)*
 
-## Contact
+---
 
-If you have any questions or suggestions about the project, feel free to contact us:
+## 🔐 Environment Variables
 
-- Email: [kodirkhonov99@gmail.com](mailto:kodirkhonov99@gmail.com)
+To run this project, you will need to add the following environment variables to your \`.env\` file:
+
+```env
+VITE_FIREBASE_API_KEY=your_api_key
+VITE_FIREBASE_AUTH_DOMAIN=your_auth_domain
+VITE_FIREBASE_PROJECT_ID=your_project_id
+# Add all required Firebase credentials
+```
+
+---
+
+## 📜 Available Scripts
+
+In the project directory, you can run:
+
+- `npm start` — Runs the app in development mode.
+- `npm run build` — Builds the app for production.
+- `npm run lint` — Runs ESLint for code quality checks.
+- `npm run format` — Formats code using Prettier.
+
+---
+
+## 🤝 Contributing
+
+Contributions are welcome! To contribute:
+
+1. Fork the repository  
+2. Create your feature branch:
+
+```bash
+git checkout -b feature/AmazingFeature
+```
+
+3. Commit your changes:
+
+```bash
+git commit -m "Add some AmazingFeature"
+```
+
+4. Push to the branch:
+
+```bash
+git push origin feature/AmazingFeature
+```
+
+5. Open a Pull Request
+
+---
+
+## 📝 License
+
+Distributed under the MIT License. See the [LICENSE](LICENSE) file for more information.
+
+---
+
+## 📬 Contact
+
+**Author**: [RusDev](https://github.com/rkodirkhonov)  
+**Email**: [kodirkhonov99@gmail.com](mailto:kodirkhonov99@gmail.com)  
+**Project Repo**: [https://github.com/rkodirkhonov/restaurant](https://github.com/rkodirkhonov/restaurant)
