@@ -5,7 +5,7 @@ import { MdOutlineRestaurantMenu } from "react-icons/md";
 import images from "../../constants/images";
 import "./Navbar.css";
 import { Link, useLocation } from "react-router-dom";
-import { AuthContext, AuthProvider } from "../../context/AuthContext";
+import { AuthContext } from "../../context/AuthContext";
 
 const Navbar = () => {
   const [toggleMenu, setToggleMenu] = useState(false);
@@ -120,53 +120,50 @@ const Navbar = () => {
                       Contact
                     </a>
                   </li>
+
+                  {isLoggedIn ? (
+                    <>
+                      <li className="p__opensans">
+                        <Link
+                          to="/book-table"
+                          onClick={() => setToggleMenu(false)}
+                        >
+                          Book Table
+                        </Link>
+                      </li>
+                      <li className="p__opensans">
+                        <Link
+                          to="/"
+                          onClick={() => {
+                            setToggleMenu(false);
+                            setIsLoggedIn(false);
+                            Logout();
+                          }}
+                        >
+                          Log out
+                        </Link>
+                      </li>
+                    </>
+                  ) : (
+                    <>
+                      <li className="p__opensans">
+                        <Link to="/login" onClick={() => setToggleMenu(false)}>
+                          Log In
+                        </Link>
+                      </li>
+                      <li className="p__opensans">
+                        <Link
+                          to="/register"
+                          onClick={() => setToggleMenu(false)}
+                        >
+                          Register
+                        </Link>
+                      </li>
+                    </>
+                  )}
                 </>
               )}
             </ul>
-            <div className="app__navbar-login">
-              {!minimalNav &&
-                (isLoggedIn ? (
-                  <>
-                    <Link
-                      to="/login"
-                      className="p__opensans"
-                      onClick={() => {
-                        setToggleMenu(false);
-                        setIsLoggedIn(false);
-                        Logout();
-                      }}
-                    >
-                      Log out
-                    </Link>
-                    <Link
-                      to="/book-table"
-                      className="p__opensans"
-                      onClick={() => setToggleMenu(false)}
-                      style={{ marginLeft: "1rem" }}
-                    >
-                      Book Table
-                    </Link>
-                  </>
-                ) : (
-                  <>
-                    <Link
-                      to="/login"
-                      className="p__opensans"
-                      onClick={() => setToggleMenu(false)}
-                      style={{ marginRight: "1rem" }}
-                    >
-                      Log In
-                    </Link>
-                    <Link
-                      to="/register"
-                      className="p__opensans"
-                      onClick={() => setToggleMenu(false)}
-                    >
-                      Register
-                    </Link>
-                  </>
-                ))}
-            </div>
           </div>
         )}
       </div>
