@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { auth } from "../firebase";
 import { createUserWithEmailAndPassword } from "firebase/auth";
-import "../pages/Auth.css";
+import { auth } from "../firebase";
+import "./Auth.css";
 
 const Register = () => {
   const navigate = useNavigate();
@@ -10,18 +10,25 @@ const Register = () => {
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [error, setError] = useState(null);
+  const [submitting, setSubmitting] = useState(false);
 
   const handleRegister = async (e) => {
     e.preventDefault();
+    setError(null);
+
     if (password !== confirmPassword) {
       setError("Passwords do not match");
       return;
     }
+
+    setSubmitting(true);
     try {
       await createUserWithEmailAndPassword(auth, email, password);
-      navigate("/login");
+      navigate("/book-table", { replace: true });
     } catch (err) {
       setError(err.message);
+    } finally {
+      setSubmitting(false);
     }
   };
 
@@ -42,6 +49,7 @@ const Register = () => {
           value={password}
           onChange={(e) => setPassword(e.target.value)}
           required
+          minLength={6}
         />
         <input
           type="password"
@@ -49,18 +57,15 @@ const Register = () => {
           value={confirmPassword}
           onChange={(e) => setConfirmPassword(e.target.value)}
           required
+          minLength={6}
         />
-        <button type="submit">Register</button>
-        {error && <p style={{ color: "red" }}>{error}</p>}
+        <button type="submit" disabled={submitting}>
+          {submitting ? "Creating account..." : "Register"}
+        </button>
+        {error && <p className="auth-error">{error}</p>}
       </form>
       <p>
-        Already have an account?{" "}
-        <Link
-          to="/login"
-          style={{ color: "#007bff", textDecoration: "underline" }}
-        >
-          Sign in here
-        </Link>
+        Already have an account? <Link to="/login">Sign in here</Link>
       </p>
     </div>
   );

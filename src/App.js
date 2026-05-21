@@ -1,6 +1,6 @@
 import React from "react";
-import { Routes, Route } from "react-router-dom";
-import ProtectedRoute from "./context/ProtectedRoute";
+import { Route, Routes } from "react-router-dom";
+
 import {
   AboutUs,
   Chef,
@@ -13,34 +13,32 @@ import {
   SpecialMenu,
 } from "./container";
 import { Navbar } from "./components";
-
+import ProtectedRoute from "./context/ProtectedRoute";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
 import BookTable from "./pages/BookTable";
-import Booking from "./pages/Booking";
 
 import "./App.css";
+
+const Home = () => (
+  <>
+    <Header />
+    <AboutUs />
+    <SpecialMenu />
+    <Chef />
+    <Intro />
+    <Laurels />
+    <Gallery />
+    <FindUs />
+    <Footer />
+  </>
+);
 
 const App = () => (
   <>
     <Navbar />
     <Routes>
-      <Route
-        path="/"
-        element={
-          <>
-            <Header />
-            <AboutUs />
-            <SpecialMenu />
-            <Chef />
-            <Intro />
-            <Laurels />
-            <Gallery />
-            <FindUs />
-            <Footer />
-          </>
-        }
-      />
+      <Route path="/" element={<Home />} />
       <Route path="/login" element={<Login />} />
       <Route path="/register" element={<Register />} />
       <Route
@@ -51,7 +49,6 @@ const App = () => (
           </ProtectedRoute>
         }
       />
-      <Route path="/booking" element={<Booking />} />
     </Routes>
   </>
 );

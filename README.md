@@ -1,161 +1,94 @@
-# 🍽️ Restaurant Reservation Website
+# Restaurant Reservation Website
 
-A modern, responsive web application for table reservations with user authentication and protected routes.
+A modern, responsive React application for a restaurant landing page with user
+authentication and a Firestore-backed table reservation system.
 
-<!-- ![Project Screenshot](https://via.placeholder.com/800x500)  -->
+## Table of Contents
+- [Features](#features)
+- [Demo](#demo)
+- [Tech Stack](#tech-stack)
+- [Getting Started](#getting-started)
+- [Environment Variables](#environment-variables)
+- [Available Scripts](#available-scripts)
+- [Project Structure](#project-structure)
+- [License](#license)
+- [Contact](#contact)
 
----
+## Features
+- User authentication (Register / Login / Logout) via Firebase Auth
+- Protected routes for signed-in users
+- Table reservation form persisted to Cloud Firestore
+- Per-user booking history
+- Fully responsive landing page (gallery, menu, awards, contact)
 
-## 📑 Table of Contents
-- [✨ Features](#-features)
-- [🔗 Demo](#-demo)
-- [🛠️ Installation](#-installation)
-- [🧱 Tech Stack](#-tech-stack)
-- [📁 Project Structure](#-project-structure)
-- [🔐 Environment Variables](#-environment-variables)
-- [📜 Available Scripts](#-available-scripts)
-- [🤝 Contributing](#-contributing)
-- [📝 License](#-license)
-- [📬 Contact](#-contact)
+## Demo
+- Live demo: https://restaurant-website-h93f0xaop-rkodirkhonovs-projects.vercel.app/
+- GitHub: https://github.com/rkodirkhonov/restaurant
 
----
+## Tech Stack
+- React 18 (Create React App)
+- React Router v6
+- Firebase Authentication and Cloud Firestore
+- React Icons
+- Plain CSS
 
-## ✨ Features
-- 🔐 **User Authentication** (Register / Login / Logout)
-- 📅 **Table Reservation System**
-- 🔒 **Protected Routes** for authenticated users
-- 📱 **Fully Responsive** design
-- 🖼️ **Restaurant Gallery & Menu**
-- 📍 **Interactive Location Map**
-- 📝 **Form Validation**
-
----
-
-## 🔗 Demo
-
-[![Live Demo](https://img.shields.io/badge/-Live%20Demo-brightgreen)](https://restaurant-website-h93f0xaop-rkodirkhonovs-projects.vercel.app/)  
-[![GitHub Repo](https://img.shields.io/badge/-GitHub%20Repo-blue)](https://github.com/rkodirkhonov/restaurant)
-
----
-
-## 🛠️ Installation
+## Getting Started
 
 1. Clone the repository:
-
-```bash
-git clone https://github.com/rkodirkhonov/restaurant.git
-cd restaurant
-```
-
+   ```bash
+   git clone https://github.com/rkodirkhonov/restaurant.git
+   cd restaurant
+   ```
 2. Install dependencies:
+   ```bash
+   npm install
+   ```
+3. Copy the environment template and fill in your Firebase project credentials:
+   ```bash
+   cp .env.example .env
+   ```
+4. Start the development server:
+   ```bash
+   npm start
+   ```
+   The app runs at http://localhost:3000.
 
-```bash
-npm install
-```
+## Environment Variables
 
-3. Set up environment variables:
-
-```bash
-cp .env.example .env
-# Add your Firebase config in .env
-```
-
-4. Run the development server:
-
-```bash
-npm start
-```
-
-The app will be accessible at: [http://localhost:3000](http://localhost:3000)
-
----
-
-## 🧱 Tech Stack
-
-### Frontend:
-- React.js
-- React Router
-- CSS Modules
-- React Icons
-- HTML5
-- CSS3
-
-### Backend Services:
-- Firebase Authentication
-- (Optional) Firebase Firestore
-
-### Dev Tools:
-- Vite
-- ESLint
-- Prettier
-
----
-
-## 📁 Project Structure
-
-*(Optional — add later if needed, e.g., explain folders like \`/components\`, \`/pages\`, etc.)*
-
----
-
-## 🔐 Environment Variables
-
-To run this project, you will need to add the following environment variables to your \`.env\` file:
+Create a `.env` file in the project root with the following keys (see
+`.env.example`):
 
 ```env
-VITE_FIREBASE_API_KEY=your_api_key
-VITE_FIREBASE_AUTH_DOMAIN=your_auth_domain
-VITE_FIREBASE_PROJECT_ID=your_project_id
-# Add all required Firebase credentials
+REACT_APP_FIREBASE_API_KEY=your_api_key
+REACT_APP_FIREBASE_AUTH_DOMAIN=your_project.firebaseapp.com
+REACT_APP_FIREBASE_PROJECT_ID=your_project_id
+REACT_APP_FIREBASE_STORAGE_BUCKET=your_project.firebasestorage.app
+REACT_APP_FIREBASE_MESSAGING_SENDER_ID=your_messaging_sender_id
+REACT_APP_FIREBASE_APP_ID=your_app_id
 ```
 
----
-
-## 📜 Available Scripts
-
-In the project directory, you can run:
-
+## Available Scripts
 - `npm start` — Runs the app in development mode.
-- `npm run build` — Builds the app for production.
-- `npm run lint` — Runs ESLint for code quality checks.
-- `npm run format` — Formats code using Prettier.
+- `npm run build` — Builds the app for production into `build/`.
+- `npm test` — Runs the test runner in watch mode.
 
----
-
-## 🤝 Contributing
-
-Contributions are welcome! To contribute:
-
-1. Fork the repository  
-2. Create your feature branch:
-
-```bash
-git checkout -b feature/AmazingFeature
+## Project Structure
+```
+src/
+├── App.js                 # Routes
+├── index.js               # App entrypoint + providers
+├── firebase.js            # Firebase initialization
+├── assets/                # Images and media
+├── components/            # Reusable UI (Navbar, Footer pieces, MenuItem, SubHeading)
+├── container/             # Page sections (Header, AboutUs, Menu, Chef, ...)
+├── constants/             # Static data and image map
+├── context/               # Auth context + ProtectedRoute
+└── pages/                 # Auth and booking screens
 ```
 
-3. Commit your changes:
+## License
+Distributed under the MIT License.
 
-```bash
-git commit -m "Add some AmazingFeature"
-```
-
-4. Push to the branch:
-
-```bash
-git push origin feature/AmazingFeature
-```
-
-5. Open a Pull Request
-
----
-
-## 📝 License
-
-Distributed under the MIT License. See the [LICENSE](LICENSE) file for more information.
-
----
-
-## 📬 Contact
-
-**Author**: [RusDev](https://github.com/rkodirkhonov)  
-**Email**: [kodirkhonov99@gmail.com](mailto:kodirkhonov99@gmail.com)  
-**Project Repo**: [https://github.com/rkodirkhonov/restaurant](https://github.com/rkodirkhonov/restaurant)
+## Contact
+**Author:** RusDev — https://github.com/rkodirkhonov
+**Email:** kodirkhonov99@gmail.com
