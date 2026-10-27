@@ -1,15 +1,12 @@
 import React, { useState, useEffect } from "react";
 import "../pages/Auth.css";
 import { useNavigate } from "react-router-dom";
+import useBookings from "../hooks/useBookings";
 import { auth, db } from "../firebase";
 import { onAuthStateChanged, signOut } from "firebase/auth";
 import {
   addDoc,
   collection,
-  query,
-  where,
-  getDocs,
-  orderBy,
 } from "firebase/firestore";
 
 const BookTable = () => {
@@ -21,30 +18,19 @@ const BookTable = () => {
     datetime: "",
     request: "",
   });
-  const [bookings, setBookings] = useState([]);
+  const { bookings, status, reload } = useBookings(user?.uid);
 
   useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, async (currentUser) => {
+    const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
       if (currentUser) {
         setUser(currentUser);
-        await fetchBookings(currentUser.uid);
       } else {
+        setUser(null);
         navigate("/login");
       }
     });
     return () => unsubscribe();
   }, [navigate]);
-
-  const fetchBookings = async (uid) => {
-    const q = query(
-      collection(db, "bookings"),
-      where("uid", "==", uid),
-      orderBy("createdAt", "asc")
-    );
-    const snapshot = await getDocs(q);
-    const data = snapshot.docs.map((doc) => doc.data());
-    setBookings(data);
-  };
 
   const handleChange = (e) => {
     setFormData((prev) => ({
@@ -71,7 +57,7 @@ const BookTable = () => {
       datetime: "",
       request: "",
     });
-    await fetchBookings(user.uid);
+    await reload();
   };
 
   const handleLogout = () => {
@@ -119,9 +105,15 @@ const BookTable = () => {
 
       <div style={{ marginTop: "30px" }}>
         <h3>Your Bookings</h3>
+        {status === "loading" && <p role="status">Loading your bookings…</p>}
+        {status === "error" && <div role="alert">
+          <p>We could not load your bookings. Please try again.</p>
+          <button type="button" onClick={reload}>Retry</button>
+        </div>}
+        {status === "success" && bookings.length === 0 && <p>You have no bookings yet.</p>}
         <ul>
-          {bookings.map((b, index) => (
-            <li key={index}>
+          {bookings.map((b) => (
+            <li key={b.id}>
               🍽 {b.name} - {b.datetime} <br />
               <small>{b.email}</small> <br />
               {b.request && <em>“{b.request}”</em>}
