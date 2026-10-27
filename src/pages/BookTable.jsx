@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import "../pages/Auth.css";
 import { useNavigate } from "react-router-dom";
 import { validateReservation } from "../utils/validateReservation";
@@ -13,6 +13,8 @@ import {
 const BookTable = () => {
   const navigate = useNavigate();
   const [user, setUser] = useState(null);
+  const [submission, setSubmission] = useState('idle');
+  const submitting = useRef(false);
   const [errors, setErrors] = useState({});
   const [formData, setFormData] = useState({
     name: "",
@@ -43,6 +45,7 @@ const BookTable = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    if (submitting.current || !user) return;
 
     const validation = validateReservation(formData);
     setErrors(validation);
@@ -58,13 +61,18 @@ const BookTable = () => {
       createdAt: new Date(),
     };
 
-    await addDoc(collection(db, "bookings"), newBooking);
-    setFormData({
-      name: "",
-      email: "",
-      datetime: "",
-      request: "",
-    });
+    submitting.current = true;
+    setSubmission('saving');
+    try {
+      await addDoc(collection(db, "bookings"), newBooking);
+    } catch {
+      setSubmission('error');
+      submitting.current = false;
+      return;
+    }
+    setFormData({ name: "", email: "", datetime: "", request: "" });
+    setSubmission('success');
+    submitting.current = false;
     await reload();
   };
 
@@ -125,7 +133,12 @@ const BookTable = () => {
           value={formData.request}
           onChange={handleChange}
         ></textarea>
-        <button type="submit">Book Now</button>
+        <button type="submit" disabled={submission === 'saving'}>
+          {submission === 'saving' ? 'Saving…' : 'Book Now'}
+        </button>
+        {submission === 'saving' && <p role="status">Saving your reservation request…</p>}
+        {submission === 'success' && <p role="status">Your reservation request was saved.</p>}
+        {submission === 'error' && <p role="alert">We could not save your request. Your details are still here; please try again.</p>}
       </form>
 
       <div style={{ marginTop: "30px" }}>
