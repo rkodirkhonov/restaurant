@@ -1,6 +1,7 @@
 import React from 'react';
 import { act, fireEvent, render, screen } from '@testing-library/react';
 import '@testing-library/jest-dom';
+import userEvent from '@testing-library/user-event';
 import { getDocs } from 'firebase/firestore';
 import { onAuthStateChanged } from 'firebase/auth';
 import BookTable from './BookTable';
@@ -63,4 +64,30 @@ test('cleans up authentication listener and ignores requests after unmount', asy
   unmount();
   await act(async () => finish({ docs: [] }));
   expect(unsubscribe).toHaveBeenCalledTimes(1);
+});
+
+
+test('labels fields and focuses the first invalid input', async () => {
+  getDocs.mockResolvedValue({ docs: [] });
+  render(<BookTable />);
+  await screen.findByText('You have no bookings yet.');
+  expect(screen.getByLabelText('Special requests (optional)')).toBeInTheDocument();
+  fireEvent.submit(screen.getByRole('button', { name: 'Book Now' }).closest('form'));
+  expect(screen.getByLabelText('Full name')).toHaveFocus();
+  expect(screen.getByLabelText('Full name')).toHaveAttribute('aria-invalid', 'true');
+  expect(screen.getAllByRole('alert')).toHaveLength(3);
+});
+
+
+test('keyboard users can reach submit and are returned to the invalid field', async () => {
+  getDocs.mockResolvedValue({ docs: [] });
+  render(<BookTable />);
+  await screen.findByText('You have no bookings yet.');
+  const keyboard = userEvent;
+  await keyboard.tab();
+  expect(screen.getByLabelText('Full name')).toHaveFocus();
+  for (let i = 0; i < 4; i++) await keyboard.tab();
+  expect(screen.getByRole('button', { name: 'Book Now' })).toHaveFocus();
+  await keyboard.keyboard('{Enter}');
+  expect(screen.getByLabelText('Full name')).toHaveFocus();
 });
