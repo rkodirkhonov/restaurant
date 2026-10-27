@@ -83,7 +83,7 @@ test('keyboard users can reach submit and are returned to the invalid field', as
   getDocs.mockResolvedValue({ docs: [] });
   render(<BookTable />);
   await screen.findByText('You have no bookings yet.');
-  const keyboard = userEvent.setup();
+  const keyboard = userEvent;
   await keyboard.tab();
   expect(screen.getByLabelText('Full name')).toHaveFocus();
   for (let i = 0; i < 4; i++) await keyboard.tab();
