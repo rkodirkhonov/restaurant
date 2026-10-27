@@ -2,7 +2,7 @@ import React from 'react';
 import { act, fireEvent, render, screen } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import userEvent from '@testing-library/user-event';
-import { getDocs } from 'firebase/firestore';
+import { getDocs, addDoc } from 'firebase/firestore';
 import { onAuthStateChanged } from 'firebase/auth';
 import BookTable from './BookTable';
 
@@ -88,6 +88,45 @@ test('keyboard users can reach submit and are returned to the invalid field', as
   expect(screen.getByLabelText('Full name')).toHaveFocus();
   for (let i = 0; i < 4; i++) await keyboard.tab();
   expect(screen.getByRole('button', { name: 'Book Now' })).toHaveFocus();
-  await keyboard.keyboard('{Enter}');
+  await act(async () => keyboard.keyboard('{Enter}'));
   expect(screen.getByLabelText('Full name')).toHaveFocus();
+});
+
+
+function fillReservation() {
+  fireEvent.change(screen.getByLabelText('Full name'), { target: { value: 'Alice' } });
+  fireEvent.change(screen.getByLabelText('Email address'), { target: { value: 'alice@example.com' } });
+  fireEvent.change(screen.getByLabelText('Date and time'), { target: { value: '2099-01-01T18:00' } });
+}
+
+test('guards duplicate submissions and confirms only after the write', async () => {
+  getDocs.mockResolvedValue({ docs: [] });
+  let finish;
+  addDoc.mockReturnValue(new Promise(resolve => { finish = resolve; }));
+  render(<BookTable />);
+  await screen.findByText('You have no bookings yet.');
+  fillReservation();
+  const form = screen.getByRole('button', { name: 'Book Now' }).closest('form');
+  fireEvent.submit(form);
+  fireEvent.submit(form);
+  expect(addDoc).toHaveBeenCalledTimes(1);
+  expect(screen.getByRole('button', { name: 'Saving…' })).toBeDisabled();
+  expect(screen.queryByText('Your reservation request was saved.')).not.toBeInTheDocument();
+  await act(async () => finish({ id: 'new-booking' }));
+  expect(screen.getByText('Your reservation request was saved.')).toBeInTheDocument();
+  expect(screen.getByLabelText('Full name')).toHaveValue('');
+});
+
+test('retains details on write failure and allows retry', async () => {
+  getDocs.mockResolvedValue({ docs: [] });
+  addDoc.mockRejectedValueOnce(new Error('offline')).mockResolvedValueOnce({ id: 'saved' });
+  render(<BookTable />);
+  await screen.findByText('You have no bookings yet.');
+  fillReservation();
+  fireEvent.click(screen.getByRole('button', { name: 'Book Now' }));
+  expect(await screen.findByRole('alert')).toHaveTextContent('could not save');
+  expect(screen.getByLabelText('Full name')).toHaveValue('Alice');
+  fireEvent.click(screen.getByRole('button', { name: 'Book Now' }));
+  expect(await screen.findByText('Your reservation request was saved.')).toBeInTheDocument();
+  expect(addDoc).toHaveBeenCalledTimes(2);
 });
