@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import "../pages/Auth.css";
 import { useNavigate } from "react-router-dom";
+import { validateReservation } from "../utils/validateReservation";
 import useBookings from "../hooks/useBookings";
 import { auth, db } from "../firebase";
 import { onAuthStateChanged, signOut } from "firebase/auth";
@@ -12,6 +13,7 @@ import {
 const BookTable = () => {
   const navigate = useNavigate();
   const [user, setUser] = useState(null);
+  const [errors, setErrors] = useState({});
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -42,7 +44,13 @@ const BookTable = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    if (!formData.name || !formData.email || !formData.datetime) return;
+    const validation = validateReservation(formData);
+    setErrors(validation);
+    const firstInvalid = Object.keys(validation)[0];
+    if (firstInvalid) {
+      e.currentTarget.elements.namedItem(firstInvalid).focus();
+      return;
+    }
 
     const newBooking = {
       ...formData,
@@ -69,8 +77,13 @@ const BookTable = () => {
   return (
     <div className="auth-container">
       <h2>Book a Table</h2>
-      <form className="app__book-form" onSubmit={handleSubmit}>
+      <form className="app__book-form" onSubmit={handleSubmit} noValidate>
+        <label htmlFor="booking-name">Full name</label>
+        {errors.name && <span id="name-error" role="alert">{errors.name}</span>}
         <input
+          id="booking-name"
+          aria-invalid={Boolean(errors.name)}
+          aria-describedby={errors.name ? "name-error" : undefined}
           type="text"
           name="name"
           placeholder="Full Name"
@@ -78,7 +91,12 @@ const BookTable = () => {
           onChange={handleChange}
           required
         />
+        <label htmlFor="booking-email">Email address</label>
+        {errors.email && <span id="email-error" role="alert">{errors.email}</span>}
         <input
+          id="booking-email"
+          aria-invalid={Boolean(errors.email)}
+          aria-describedby={errors.email ? "email-error" : undefined}
           type="email"
           name="email"
           placeholder="Email"
@@ -86,14 +104,21 @@ const BookTable = () => {
           onChange={handleChange}
           required
         />
+        <label htmlFor="booking-datetime">Date and time</label>
+        {errors.datetime && <span id="datetime-error" role="alert">{errors.datetime}</span>}
         <input
+          id="booking-datetime"
+          aria-invalid={Boolean(errors.datetime)}
+          aria-describedby={errors.datetime ? "datetime-error" : undefined}
           type="datetime-local"
           name="datetime"
           value={formData.datetime}
           onChange={handleChange}
           required
         />
+        <label htmlFor="booking-request">Special requests (optional)</label>
         <textarea
+          id="booking-request"
           name="request"
           placeholder="Any special request?"
           rows="4"
