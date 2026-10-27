@@ -1,161 +1,72 @@
-# 🍽️ Restaurant Reservation Website
+# Restaurant Reservations
 
-A modern, responsive web application for table reservations with user authentication and protected routes.
+A React restaurant website with account registration, sign-in, and a table-reservation form backed by Firebase.
 
-<!-- ![Project Screenshot](https://via.placeholder.com/800x500)  -->
+[Existing demo link](https://restaurant-website-h93f0xaop-rkodirkhonovs-projects.vercel.app/) · [Source](https://github.com/rkodirkhonov/restaurant)
 
----
+## Current functionality
 
-## 📑 Table of Contents
-- [✨ Features](#-features)
-- [🔗 Demo](#-demo)
-- [🛠️ Installation](#-installation)
-- [🧱 Tech Stack](#-tech-stack)
-- [📁 Project Structure](#-project-structure)
-- [🔐 Environment Variables](#-environment-variables)
-- [📜 Available Scripts](#-available-scripts)
-- [🤝 Contributing](#-contributing)
-- [📝 License](#-license)
-- [📬 Contact](#-contact)
+- Restaurant landing page with menu, gallery, chef, and location sections.
+- Authentication pages and a protected `/book-table` route.
+- Reservation details saved to Firestore.
+- Booking history filtered by the signed-in user's ID.
 
----
+This is a portfolio project in development. The current form records reservation requests; it does not implement table capacity, availability, or conflict prevention.
 
-## ✨ Features
-- 🔐 **User Authentication** (Register / Login / Logout)
-- 📅 **Table Reservation System**
-- 🔒 **Protected Routes** for authenticated users
-- 📱 **Fully Responsive** design
-- 🖼️ **Restaurant Gallery & Menu**
-- 📍 **Interactive Location Map**
-- 📝 **Form Validation**
+## Technology
 
----
+React 18, React Router 6, Firebase Authentication, Cloud Firestore, React Icons, and CSS. The build tooling is Create React App (`react-scripts`), not Vite.
 
-## 🔗 Demo
-
-[![Live Demo](https://img.shields.io/badge/-Live%20Demo-brightgreen)](https://restaurant-website-h93f0xaop-rkodirkhonovs-projects.vercel.app/)  
-[![GitHub Repo](https://img.shields.io/badge/-GitHub%20Repo-blue)](https://github.com/rkodirkhonov/restaurant)
-
----
-
-## 🛠️ Installation
-
-1. Clone the repository:
+## Run locally
 
 ```bash
 git clone https://github.com/rkodirkhonov/restaurant.git
 cd restaurant
+npm ci
 ```
 
-2. Install dependencies:
+Before using authentication or reservations:
 
-```bash
-npm install
-```
-
-3. Set up environment variables:
-
-```bash
-cp .env.example .env
-# Add your Firebase config in .env
-```
-
-4. Run the development server:
+1. Create a Firebase project for your own development.
+2. Replace the web app configuration in `src/firebase.js` with your project's configuration. The current implementation reads this object directly; it does not read `VITE_*` variables.
+3. Enable Email/Password authentication and create a Firestore database.
+4. Configure authorized domains and Firestore rules for your environment. Users should only read and create bookings associated with their own authenticated UID. Client-side filtering and protected routes alone do not enforce database access.
+5. The booking-history query filters by `uid` and orders by `createdAt`; create the corresponding index if Firestore requests it.
 
 ```bash
 npm start
 ```
 
-The app will be accessible at: [http://localhost:3000](http://localhost:3000)
+Open the local URL printed by the development server, normally `http://localhost:3000`.
 
----
+## Commands
 
-## 🧱 Tech Stack
+| Command | Purpose |
+| --- | --- |
+| `npm start` | Start the development server |
+| `npm run build` | Create a production build |
+| `npm test` | Start the configured test runner |
 
-### Frontend:
-- React.js
-- React Router
-- CSS Modules
-- React Icons
-- HTML5
-- CSS3
+The test command exists in the package configuration; the repository does not currently include application test files. There are no dedicated lint or format scripts.
 
-### Backend Services:
-- Firebase Authentication
-- (Optional) Firebase Firestore
+## Code map
 
-### Dev Tools:
-- Vite
-- ESLint
-- Prettier
+- `src/App.js` — page routes and landing-page composition.
+- `src/components/` — shared interface components.
+- `src/container/` — landing-page sections.
+- `src/pages/` — authentication and booking screens.
+- `src/context/` — authentication context and protected-route component.
+- `src/firebase.js` — Firebase initialization.
 
----
+## Next milestones
 
-## 📁 Project Structure
+- [ ] Add visible loading, empty, success, and error states for bookings.
+- [ ] Add labels, keyboard checks, and accessible validation messages.
+- [ ] Document and test Firestore access rules with an emulator.
+- [ ] Add availability and capacity checks before calling a booking confirmed.
+- [ ] Add automated tests for authentication and reservation flows.
+- [ ] Add a verified walkthrough and screenshots of the complete booking journey.
 
-*(Optional — add later if needed, e.g., explain folders like \`/components\`, \`/pages\`, etc.)*
+## Project status
 
----
-
-## 🔐 Environment Variables
-
-To run this project, you will need to add the following environment variables to your \`.env\` file:
-
-```env
-VITE_FIREBASE_API_KEY=your_api_key
-VITE_FIREBASE_AUTH_DOMAIN=your_auth_domain
-VITE_FIREBASE_PROJECT_ID=your_project_id
-# Add all required Firebase credentials
-```
-
----
-
-## 📜 Available Scripts
-
-In the project directory, you can run:
-
-- `npm start` — Runs the app in development mode.
-- `npm run build` — Builds the app for production.
-- `npm run lint` — Runs ESLint for code quality checks.
-- `npm run format` — Formats code using Prettier.
-
----
-
-## 🤝 Contributing
-
-Contributions are welcome! To contribute:
-
-1. Fork the repository  
-2. Create your feature branch:
-
-```bash
-git checkout -b feature/AmazingFeature
-```
-
-3. Commit your changes:
-
-```bash
-git commit -m "Add some AmazingFeature"
-```
-
-4. Push to the branch:
-
-```bash
-git push origin feature/AmazingFeature
-```
-
-5. Open a Pull Request
-
----
-
-## 📝 License
-
-Distributed under the MIT License. See the [LICENSE](LICENSE) file for more information.
-
----
-
-## 📬 Contact
-
-**Author**: [RusDev](https://github.com/rkodirkhonov)  
-**Email**: [kodirkhonov99@gmail.com](mailto:kodirkhonov99@gmail.com)  
-**Project Repo**: [https://github.com/rkodirkhonov/restaurant](https://github.com/rkodirkhonov/restaurant)
+The demo URL above is retained from the existing documentation; availability has not been revalidated in this documentation update. No license file is currently included in the repository.
